@@ -1,0 +1,25 @@
+{
+  "name": "TriviaGame",
+  "version": "1.0.0",
+  "description": "University of Minnesota Coding Bootcamp - Week 5 HW Assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madeloux/TriviaGame.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/madeloux/TriviaGame/issues"
+  },
+  "homepage": "https://github.com/madeloux/TriviaGame#readme",
+  "dependencies": {
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0"
+  }
+}
