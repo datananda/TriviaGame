@@ -36,11 +36,12 @@ seconds given for viewing the answer
 ############################
 # SETTING UP THE QUESTIONS
 ############################
-"What is Utah's state song?"
-"Utah, This is the Place"
-"It's a Pretty, Great State"
-"From Mountains to Deserts"
-"Deseret. The Land of Zion."
+questions = [question: "What is Utah's state song?"
+            answers: ["Utah, This is the Place",
+                      "It's a Pretty, Great State"
+                      "From Mountains to Deserts"
+                      "Deseret. The Land of Zion."],
+            question: 
 
 */
 
@@ -53,14 +54,18 @@ function TriviaQuestion(question, answers, correctAnswer = answers[0]) {
     this.question = question;
     this.answers = answers;
     this.correctAnswer = correctAnswer;
-    this.shuffleAnswers = function shuffle() {
-        // shuffle array
-    };
-    this.checkGuess = function check(guess) {
-        if (guess === this.correctAnswer) {
-            return true;
-        }
-        return false;
-    };
 }
 
+TriviaQuestion.prototype.shuffleAnswers = function shuffle() {
+    // shuffle array
+};
+
+TriviaQuestion.prototype.checkGuess = function check(guess) {
+    if (guess === this.correctAnswer) {
+        return true;
+    }
+    return false;
+};
+
+let question1 = new TriviaQuestion("Who's the best Coding Boot Camp teacher?", ["Parker","Josh","Jed","Bob"]);
+console.log(question1);
