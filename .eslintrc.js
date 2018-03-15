@@ -1,5 +1,11 @@
 module.exports = { 
   "extends": "airbnb-base",
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jquery": true
+  },
   "rules": {
     "no-console": [0],
     "indent": [ 2, 4 ],
