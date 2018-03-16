@@ -48,10 +48,12 @@ questions = [question: "What is Utah's state song?"
 /-------------------------------------------------------------------------*/
 let questionTimer;
 const question1 = new TriviaQuestion("Who's the best Coding Boot Camp teacher?", "Parker", "Josh", "Jed", "Bob");
+const question2 = new TriviaQuestion("Who's the best Coding Boot Camp TA?", "Katie", "Matt", "Hogan", "Will");
+const question3 = new TriviaQuestion("Who's the best Coding Boot Camp SSM?", "Andrea", "Jamie", "Sarah", "Joelle");
 
 const triviaGame = {
-    questions: [question1],
-    currentQuestion: question1,
+    questions: [question1, question2, question3],
+    currentQuestion: {},
     numCorrect: 0,
     numIncorrect: 0,
     numUnanswered: 0,
@@ -61,14 +63,13 @@ const triviaGame = {
         this.numIncorrect = 0;
         this.numUnanswered = 0;
         $("#start-button").hide();
+        this.selectQuestion();
         this.startQuestionTimer();
     },
-    displayQuestion() {
-        $("#question").text(this.currentQuestion.question);
-        // TODO: SHUFFLE ANSWERS
-        this.currentQuestion.answers.forEach((elem, i) => {
-            $(`#answers li:eq(${i})`).text(elem);
-        });
+    selectQuestion() {
+        const randIndex = Math.floor(Math.random() * this.questions.length);
+        this.currentQuestion = this.questions[randIndex];
+        this.questions.splice(randIndex, 1);
     },
     startQuestionTimer() {
         let secondsLeft = this.secondsToAnswer;
@@ -84,6 +85,28 @@ const triviaGame = {
             }
         }, 1000);
     },
+    displayQuestion() {
+        $("#question").show().text(this.currentQuestion.question);
+        $("#answers").show();
+        // TODO: SHUFFLE ANSWERS
+        this.currentQuestion.answers.forEach((elem, i) => {
+            $(`#answers li:eq(${i})`).text(elem);
+        });
+    },
+    displayResult(result) {
+        $("#question").hide();
+        $("#answers").hide();
+        $("#result").show().text(result);
+        setTimeout(() => {
+            $("#result").hide();
+            if (triviaGame.checkGameOver()) {
+                // display end of game summary
+            } else {
+                triviaGame.selectQuestion();
+                triviaGame.startQuestionTimer();
+            }
+        }, 3000);
+    },
     checkGuess(guess) {
         if (this.currentQuestion.isCorrectAnswer(guess)) {
             this.numCorrect++;
@@ -93,10 +116,11 @@ const triviaGame = {
             this.displayResult("incorrect");
         }
     },
-    displayResult(result) {
-        $("#question").hide();
-        $("#answers").hide();
-        $("#result").text(result);
+    checkGameOver() {
+        if (this.questions.length === 0) {
+            return true;
+        }
+        return false;
     },
 };
 
