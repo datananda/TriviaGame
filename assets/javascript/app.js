@@ -46,6 +46,7 @@ questions = [question: "What is Utah's state song?"
 /*-------------------------------------------------------------------------
 / GLOBAL VARIABLES
 /-------------------------------------------------------------------------*/
+let questionTimer;
 const question1 = new TriviaQuestion("Who's the best Coding Boot Camp teacher?", "Parker", "Josh", "Jed", "Bob");
 
 const triviaGame = {
@@ -64,31 +65,38 @@ const triviaGame = {
     },
     displayQuestion() {
         $("#question").text(this.currentQuestion.question);
-        // shuffle answers
-        this.currentQuestion.answers.forEach((elem) => {
-            const newListItem = $("<li>").text(elem);
-            $("#answers").append(newListItem);
+        // TODO: SHUFFLE ANSWERS
+        this.currentQuestion.answers.forEach((elem, i) => {
+            $(`#answers li:eq(${i})`).text(elem);
         });
     },
     startQuestionTimer() {
         let secondsLeft = this.secondsToAnswer;
         this.displayQuestion();
         $("#countdown").text(`Time Remaining: ${secondsLeft} seconds`);
-        const questionTimer = setInterval(() => {
+        questionTimer = setInterval(() => {
             secondsLeft--;
             $("#countdown").text(`Time Remaining: ${secondsLeft} seconds`);
             if (secondsLeft === 0) {
                 clearInterval(questionTimer);
+                this.numUnanswered++;
+                this.displayResult("unanswered");
             }
         }, 1000);
     },
     checkGuess(guess) {
         if (this.currentQuestion.isCorrectAnswer(guess)) {
             this.numCorrect++;
+            this.displayResult("correct");
         } else {
             this.numIncorrect++;
+            this.displayResult("incorrect");
         }
-        // TODO: DISPLAY RESULT
+    },
+    displayResult(result) {
+        $("#question").hide();
+        $("#answers").hide();
+        $("#result").text(result);
     },
 };
 
@@ -108,7 +116,6 @@ TriviaQuestion.prototype.shuffleAnswers = function shuffle() {
 
 TriviaQuestion.prototype.isCorrectAnswer = function check(guess) {
     if (guess === this.correctAnswer) {
-        console.log("correct");
         return true;
     }
     return false;
@@ -117,7 +124,8 @@ TriviaQuestion.prototype.isCorrectAnswer = function check(guess) {
 /*-------------------------------------------------------------------------
 / MAIN PROCESS
 /-------------------------------------------------------------------------*/
-$("li").click(function () {
+$("#answers li").click(function () {
+    clearInterval(questionTimer);
     triviaGame.checkGuess($(this).html());
 });
 
