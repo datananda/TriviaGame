@@ -10,6 +10,8 @@ module.exports = {
     "no-console": [0],
     "indent": [ 2, 4 ],
     "quotes": [ 2, "double", "avoid-escape" ],
-    "prefer-destructuring": [0]
+    "prefer-destructuring": [0],
+    "func-names": [0],
+    "no-plusplus": [0]
   } 
 };

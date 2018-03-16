@@ -50,16 +50,45 @@ const question1 = new TriviaQuestion("Who's the best Coding Boot Camp teacher?",
 
 const triviaGame = {
     questions: [question1],
+    currentQuestion: question1,
     numCorrect: 0,
     numIncorrect: 0,
     numUnanswered: 0,
+    secondsToAnswer: 5,
+    startGame() {
+        this.numCorrect = 0;
+        this.numIncorrect = 0;
+        this.numUnanswered = 0;
+        $("#start-button").hide();
+        this.startQuestionTimer();
+    },
     displayQuestion() {
-        $("#question").text(this.questions[0].question);
-        let answerList = $("#answers");
-        // this.questions[0].answers.forEach( function (elem) {
-
-        // });
-        console.log(this.questions[0]);
+        $("#question").text(this.currentQuestion.question);
+        // shuffle answers
+        this.currentQuestion.answers.forEach((elem) => {
+            const newListItem = $("<li>").text(elem);
+            $("#answers").append(newListItem);
+        });
+    },
+    startQuestionTimer() {
+        let secondsLeft = this.secondsToAnswer;
+        this.displayQuestion();
+        $("#countdown").text(`Time Remaining: ${secondsLeft} seconds`);
+        const questionTimer = setInterval(() => {
+            secondsLeft--;
+            $("#countdown").text(`Time Remaining: ${secondsLeft} seconds`);
+            if (secondsLeft === 0) {
+                clearInterval(questionTimer);
+            }
+        }, 1000);
+    },
+    checkGuess(guess) {
+        if (this.currentQuestion.isCorrectAnswer(guess)) {
+            this.numCorrect++;
+        } else {
+            this.numIncorrect++;
+        }
+        // TODO: DISPLAY RESULT
     },
 };
 
@@ -77,8 +106,9 @@ TriviaQuestion.prototype.shuffleAnswers = function shuffle() {
     // shuffle array
 };
 
-TriviaQuestion.prototype.checkGuess = function check(guess) {
+TriviaQuestion.prototype.isCorrectAnswer = function check(guess) {
     if (guess === this.correctAnswer) {
+        console.log("correct");
         return true;
     }
     return false;
@@ -87,6 +117,10 @@ TriviaQuestion.prototype.checkGuess = function check(guess) {
 /*-------------------------------------------------------------------------
 / MAIN PROCESS
 /-------------------------------------------------------------------------*/
-console.log(question1);
-console.log(question1.checkGuess("Parker"));
-triviaGame.displayQuestion();
+$("li").click(function () {
+    triviaGame.checkGuess($(this).html());
+});
+
+$("#start-button").click(() => {
+    triviaGame.startGame();
+});
