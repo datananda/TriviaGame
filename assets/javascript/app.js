@@ -33,32 +33,24 @@ number unanswered
 seconds given for answering a question
 seconds given for viewing the answer
 
-############################
-# SETTING UP THE QUESTIONS
-############################
-questions = [question: "What is Utah's state song?"
-            answers: ["Utah, This is the Place",
-                      "It's a Pretty, Great State"
-                      "From Mountains to Deserts"
-                      "Deseret. The Land of Zion."],
 */
+
 
 /*-------------------------------------------------------------------------
 / GLOBAL VARIABLES
 /-------------------------------------------------------------------------*/
 let questionTimer;
-const question1 = new TriviaQuestion("Who's the best Coding Boot Camp teacher?", "Parker", "Josh", "Jed", "Bob");
-const question2 = new TriviaQuestion("Who's the best Coding Boot Camp TA?", "Katie", "Matt", "Hogan", "Will");
-const question3 = new TriviaQuestion("Who's the best Coding Boot Camp SSM?", "Andrea", "Jamie", "Sarah", "Joelle");
+const questionList = [];
 
 const triviaGame = {
-    questions: [question1, question2, question3],
+    questions: questionList,
     currentQuestion: {},
     numCorrect: 0,
     numIncorrect: 0,
     numUnanswered: 0,
     secondsToAnswer: 5,
     startGame() {
+        this.questions = questionList;
         this.numCorrect = 0;
         this.numIncorrect = 0;
         this.numUnanswered = 0;
@@ -81,14 +73,14 @@ const triviaGame = {
             if (secondsLeft === 0) {
                 clearInterval(questionTimer);
                 this.numUnanswered++;
-                this.displayResult("unanswered");
+                this.displayResult("Out of time!");
             }
         }, 1000);
     },
     displayQuestion() {
         $("#question").show().text(this.currentQuestion.question);
         $("#answers").show();
-        // TODO: SHUFFLE ANSWERS
+        // TODO: SHUFFLE ANSWERS look into .map
         this.currentQuestion.answers.forEach((elem, i) => {
             $(`#answers li:eq(${i})`).text(elem);
         });
@@ -97,10 +89,13 @@ const triviaGame = {
         $("#question").hide();
         $("#answers").hide();
         $("#result").show().text(result);
+        $("#correct-answer").show().text(`The correct answer was: ${this.currentQuestion.correctAnswer}`);
         setTimeout(() => {
             $("#result").hide();
+            $("#correct-answer").hide();
+            console.log(this);
             if (triviaGame.checkGameOver()) {
-                // display end of game summary
+                triviaGame.displayGameResult();
             } else {
                 triviaGame.selectQuestion();
                 triviaGame.startQuestionTimer();
@@ -108,12 +103,12 @@ const triviaGame = {
         }, 3000);
     },
     checkGuess(guess) {
-        if (this.currentQuestion.isCorrectAnswer(guess)) {
+        if (this.currentQuestion.correctAnswer === guess) {
             this.numCorrect++;
-            this.displayResult("correct");
+            this.displayResult("Correct!");
         } else {
             this.numIncorrect++;
-            this.displayResult("incorrect");
+            this.displayResult("Wrong Answer!");
         }
     },
     checkGameOver() {
@@ -122,12 +117,17 @@ const triviaGame = {
         }
         return false;
     },
+    displayGameResult() {
+        $("#num-correct").text(`Correct Answers: ${this.numCorrect}`);
+        $("#num-incorrect").text(`Incorrect Answers: ${this.numIncorrect}`);
+        $("#num-unanswered").text(`Unanswered Questions: ${this.numUnanswered}`);
+    }
 };
+
 
 /*-------------------------------------------------------------------------
 / CONSTRUCTORS & FUNCTIONS
 /-------------------------------------------------------------------------*/
-
 function TriviaQuestion(question, answer1, answer2, answer3, answer4, correctAnswer = answer1) {
     this.question = question;
     this.answers = [answer1, answer2, answer3, answer4];
@@ -138,16 +138,20 @@ TriviaQuestion.prototype.shuffleAnswers = function shuffle() {
     // shuffle array
 };
 
-TriviaQuestion.prototype.isCorrectAnswer = function check(guess) {
-    if (guess === this.correctAnswer) {
-        return true;
-    }
-    return false;
-};
+// TriviaQuestion.prototype.isCorrectAnswer = function check(guess) {
+//     if (guess === this.correctAnswer) {
+//         return true;
+//     }
+//     return false;
+// };
+
 
 /*-------------------------------------------------------------------------
 / MAIN PROCESS
 /-------------------------------------------------------------------------*/
+questionList.push(new TriviaQuestion("Who is considered to be the first computer programmer?", "Ada Lovelace", "Annabella Byron", "Betty Alexandra Toole", "Charles Babbage"));
+questionList.push(new TriviaQuestion('The “Harvard Computers” were a group of women hired by the director of the Harvard Observatory to process astronomical data. By what other name were they known?', "Pickering's Harem", "Harvard Classification System", "Cepheid Variables", "The Harem Effect"));
+
 $("#answers li").click(function () {
     clearInterval(questionTimer);
     triviaGame.checkGuess($(this).html());
