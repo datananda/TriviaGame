@@ -8,24 +8,43 @@
     <title>Trivia Game</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
-    <button id="start-button">Start</button>
-    <div id="countdown"></div>
-    <div id="question"></div>
-    <ul id="answers" class="list-group">
-        <li class="list-group-item"></li>
-        <li class="list-group-item"></li>
-        <li class="list-group-item"></li>
-        <li class="list-group-item"></li>
-    </ul>
-    <div id="result"></div>
-    <div id="correct-answer"></div>
-    <div id="num-correct"></div>
-    <div id="num-incorrect"></div>
-    <div id="num-unanswered"></div>
+    <div class="container text-center h-100">
+        <div class="row h-100">
+            <div class="col-12 d-flex flex-column justify-content-stretch">
+                <h1>W0M3N !N C0MPUT!NG TR!V!@</h1>
+                <div class="h-75 align-self-stretch d-flex">
+                    <button id="start-button" type="button" class="btn btn-outline-primary btn-lg btn-block align-self-center">Start</button>
+                    <div id="question-container" class="align-self-center w-100" style="display: none;">
+                        <h2 id="question"></h2>
+                        <div id="answers" class="list-group">
+                        </div>
+                    </div>
+                    <div id="result-container" class="align-self-center w-100" style="display: none;">
+                        <h2 id="result"></h2>
+                        <div id="correct-answer"></div>
+                    </div>
+                    <div class="game-result-container">
+                        
+                    </div>
+                </div>
+                <div class="fixed-bottom">
+                    <div id="countdown"></div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 
+            <div id="num-correct"></div>
+            <div id="num-incorrect"></div>
+            <div id="num-unanswered"></div> -->
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"

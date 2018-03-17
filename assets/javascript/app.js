@@ -48,7 +48,7 @@ const triviaGame = {
     numCorrect: 0,
     numIncorrect: 0,
     numUnanswered: 0,
-    secondsToAnswer: 5,
+    secondsToAnswer: 10,
     startGame() {
         this.questions = questionList;
         this.numCorrect = 0;
@@ -65,11 +65,16 @@ const triviaGame = {
     },
     startQuestionTimer() {
         let secondsLeft = this.secondsToAnswer;
+        let percentRemaining = 100 * (secondsLeft / this.secondsToAnswer);
+        console.log(percentRemaining);
         this.displayQuestion();
         $("#countdown").text(`Time Remaining: ${secondsLeft} seconds`);
+        $(".progress-bar").css("width", `${percentRemaining}%`);
         questionTimer = setInterval(() => {
             secondsLeft--;
+            percentRemaining = 100 * (secondsLeft / this.secondsToAnswer);
             $("#countdown").text(`Time Remaining: ${secondsLeft} seconds`);
+            $(".progress-bar").css("width", `${percentRemaining}%`);
             if (secondsLeft === 0) {
                 clearInterval(questionTimer);
                 this.numUnanswered++;
@@ -78,22 +83,21 @@ const triviaGame = {
         }, 1000);
     },
     displayQuestion() {
-        $("#question").show().text(this.currentQuestion.question);
-        $("#answers").show();
+        $("#question").text(this.currentQuestion.question);
+        $("#answers").empty();
         // TODO: SHUFFLE ANSWERS look into .map
         this.currentQuestion.answers.forEach((elem, i) => {
-            $(`#answers li:eq(${i})`).text(elem);
+            $("#answers").append($("<button>", { type: "button", class: "list-group-item list-group-item-action" }).text(elem));
         });
+        $("#question-container").show()
     },
     displayResult(result) {
-        $("#question").hide();
-        $("#answers").hide();
-        $("#result").show().text(result);
-        $("#correct-answer").show().text(`The correct answer was: ${this.currentQuestion.correctAnswer}`);
+        $("#question-container").hide();
+        $("#result").text(result);
+        $("#correct-answer").text(`The correct answer was: ${this.currentQuestion.correctAnswer}`);
+        $("#result-container").show();
         setTimeout(() => {
-            $("#result").hide();
-            $("#correct-answer").hide();
-            console.log(this);
+            $("#result-container").hide();
             if (triviaGame.checkGameOver()) {
                 triviaGame.displayGameResult();
             } else {
@@ -152,7 +156,7 @@ TriviaQuestion.prototype.shuffleAnswers = function shuffle() {
 questionList.push(new TriviaQuestion("Who is considered to be the first computer programmer?", "Ada Lovelace", "Annabella Byron", "Betty Alexandra Toole", "Charles Babbage"));
 questionList.push(new TriviaQuestion('The “Harvard Computers” were a group of women hired by the director of the Harvard Observatory to process astronomical data. By what other name were they known?', "Pickering's Harem", "Harvard Classification System", "Cepheid Variables", "The Harem Effect"));
 
-$("#answers li").click(function () {
+$("#answers").on("click", "li", function () {
     clearInterval(questionTimer);
     triviaGame.checkGuess($(this).html());
 });
