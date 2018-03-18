@@ -89,7 +89,7 @@ const triviaGame = {
         const currentAnswers = this.currentQuestion.answers.concat();
         for (let i = 0; i < this.currentQuestion.answers.length; i++) {
             const randIndex = Math.floor(Math.random() * currentAnswers.length);
-            $("#answers").append($("<button>", { type: "button", class: "btn btn-outline-secondary btn-lg btn-block" }).text(currentAnswers[randIndex]));
+            $("#answers").append($("<button>", { type: "button", class: "btn btn-outline-secondary btn-block" }).text(currentAnswers[randIndex]));
             currentAnswers.splice(randIndex, 1);
         }
         $("#question-container").show();

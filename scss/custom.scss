@@ -1,0 +1,78 @@
+//--------------------------------------------------
+// BOOTSTRAP VARIABLE OVERRIDES
+//--------------------------------------------------
+
+// COLORS
+$theme-colors: (
+  "primary": #8C3E64,
+  "secondary": #635F59,
+  "light": #A7A096,
+  "dark": #302E2C
+);
+
+// FONTS
+$font-family-sans-serif: "Muli", sans-serif;
+$font-family-monospace: "Share Tech Mono", monospace;
+$font-size-base: 1rem;
+$font-size-lg: ($font-size-base * 2);
+
+// HEADERS
+$h1-font-size: $font-size-base * 2.25;
+$h2-font-size: $font-size-base * 1.25;
+$headings-line-height: 1;
+
+// BORDERS
+$border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;
+
+// PROGRESS BAR
+$progress-height: 2rem;
+
+
+//--------------------------------------------------
+// IMPORT BOOTSTRAP
+//--------------------------------------------------
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+
+//--------------------------------------------------
+// BACKGROUND & COLOR STYLING
+//--------------------------------------------------
+body {
+    background-image: url("../images/grey.png");
+}
+
+.w-100.p-3 {
+    background-color: rgba(167, 160, 150, 0.2);
+    border: ($btn-border-width * 2) solid theme-color("light");
+}
+
+.btn {
+    background-color: $white;
+}
+
+
+//--------------------------------------------------
+// TEXT STYLING
+//--------------------------------------------------
+h1 {
+    font-family: $font-family-monospace;
+    color: theme-color("primary");
+}
+
+h1 > span {
+    color: theme-color("secondary");
+}
+
+h2 {
+    color: theme-color("secondary");
+}
+
+p {
+    white-space: pre-wrap;
+}
+
+p:last-of-type {
+    margin-bottom: 0;
+}

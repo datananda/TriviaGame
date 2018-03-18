@@ -1,29 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Trivia Game</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Muli:300|Share+Tech+Mono" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Muli|Share+Tech+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/custom.css">
 </head>
 
-<body>
+<body class="h-100">
     <div class="container text-center h-100">
         <div class="row h-100">
             <div class="col m-2 p-2 d-flex flex-column justify-content-stretch">
                 <h1>women in computing
-                    <span style="color: #777777;">trivia</span>
+                    <span>trivia</span>
                 </h1>
-                <div class="h-80 d-flex align-items-center justify-content-center">
+                <div class="h-75 d-flex align-items-center justify-content-center">
                     <button id="start-button" type="button" class="btn btn-outline-secondary btn-lg">start</button>
                     <div id="question-container" class="w-100 p-3" style="display: none;">
                         <h2 id="question" class="mb-3"></h2>
-                        <div id="answers" class="list-group"></div>
+                        <div id="answers"></div>
                     </div>
                     <div id="result-container" class="w-100 p-3" style="display: none;">
                         <h2 id="result" class="mb-3"></h2>
@@ -32,11 +30,11 @@
                     <div id="game-result-container" class="w-100 p-3" style="display: none;">
                         <h2 class="mb-3">Game Over! Here's how you did.</h2>
                         <div id="game-stats"></div>
-                        <button id="reset-button" type="button" class="btn btn-outline-secondary btn-lg">start over?</button>
+                        <button id="reset-button" type="button" class="btn btn-outline-secondary mt-1">start over?</button>
                     </div>
                 </div>
                 <div id="countdown-container" class="fixed-bottom" style="display: none;">
-                    <div id="countdown" class="position-absolute w-100 text-white"></div>
+                    <div id="countdown" class="position-absolute w-100 text-white mt-1"></div>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>

@@ -39,3 +39,8 @@ Thumbs.db
 # Dependency Directories #
 ##########################
 node_modules/
+
+# SASS Stuff #
+##############
+.sass-cache*
+.css.map
