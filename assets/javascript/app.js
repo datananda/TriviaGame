@@ -97,7 +97,11 @@ const triviaGame = {
     displayResult(result) {
         $("#question-container").hide();
         $("#result").text(result);
-        $("#correct-answer").text(`The correct answer was: ${this.currentQuestion.correctAnswer}`);
+        $("#correct-answer").empty();
+        if (result !== "Correct!") {
+            $("#correct-answer").append($("<p>").text(`The correct answer was:\n${this.currentQuestion.correctAnswer}`));
+        }
+        $("#correct-answer").append($("<p>").text(this.currentQuestion.response));
         $("#result-container").show();
         setTimeout(() => {
             $("#result-container").hide();
@@ -107,7 +111,7 @@ const triviaGame = {
                 triviaGame.selectQuestion();
                 triviaGame.startQuestionTimer();
             }
-        }, 3000);
+        }, 30000);
     },
     checkGuess(guess) {
         if (this.currentQuestion.correctAnswer === guess) {
@@ -138,18 +142,20 @@ const triviaGame = {
 /*-------------------------------------------------------------------------
 / CONSTRUCTORS & FUNCTIONS
 /-------------------------------------------------------------------------*/
-function TriviaQuestion(question, answer1, answer2, answer3, answer4, correctAnswer = answer1) {
+function TriviaQuestion(question, a1, a2, a3, a4, response, img, correctAnswer = a1) {
     this.question = question;
-    this.answers = [answer1, answer2, answer3, answer4];
+    this.answers = [a1, a2, a3, a4];
+    this.response = response;
     this.correctAnswer = correctAnswer;
+    this.image = img;
 }
 
 
 /*-------------------------------------------------------------------------
 / MAIN PROCESS
 /-------------------------------------------------------------------------*/
-questionList.push(new TriviaQuestion("Who is considered to be the first computer programmer?", "Ada Lovelace", "Annabella Byron", "Betty Alexandra Toole", "Charles Babbage"));
-questionList.push(new TriviaQuestion('The “Harvard Computers” were a group of women hired by the director of the Harvard Observatory to process astronomical data. By what other name were they known?', "Pickering's Harem", "Harvard Classification System", "Cepheid Variables", "The Harem Effect"));
+questionList.push(new TriviaQuestion("Who is considered to be the first computer programmer?", "Ada Lovelace", "Annabella Byron", "Betty Alexandra Toole", "Charles Babbage", "Lovelace wrote an algorithm for the Analytical Engine, a mechanical computer proposed by her friend and colleague Charles Babbage, to compute Bernoulli numbers. This algorithm is considered to be the first specifically tailored for implementation on a computer.", "https://placeimg.com/640/480/people"));
+questionList.push(new TriviaQuestion('The "Harvard Computers" were a group of women hired by the director of the Harvard Observatory to process astronomical data. By what other name were they known?', "Pickering's Harem", "Harvard Classification System", "Cepheid Variables", "The Harem Effect", "The Harvard Computers were better known at the time as Pickering's Harem since they were hired by Edward Charles Pickering, then director of the Harvard Observatory. This is a prime example of the so-called Harem effect where male scientists in power hire predominately female subordinates."));
 
 $("#answers").on("click", "button", function () {
     clearInterval(questionTimer);
