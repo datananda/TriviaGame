@@ -63,13 +63,14 @@ const triviaGame = {
         const randIndex = Math.floor(Math.random() * this.questions.length);
         this.currentQuestion = this.questions[randIndex];
         this.questions.splice(randIndex, 1);
+        updateTimeline([{ key: "date1", startDate: this.currentQuestion.date }]);
     },
     startQuestionTimer() {
         let secondsLeft = this.secondsToAnswer;
         let percentRemaining = 100;
         this.displayQuestion();
         $("#countdown").text(`Time Remaining: ${secondsLeft} seconds`);
-        $(".progress-bar").css("width", `${percentRemaining}%`);
+        $(".progress-bar").css("width", `${percentRemaining}%`); //TODO: UPDATE ARIA VALUE ALSO
         $("#countdown-container").show();
         questionTimer = setInterval(() => {
             secondsLeft--;
@@ -129,6 +130,7 @@ const triviaGame = {
         return false;
     },
     displayGameResult() {
+        updateTimeline([]);
         $("#countdown-container").hide();
         $("#game-stats").empty();
         $("#game-stats").append($("<p>").text(`Correct Answers: ${this.numCorrect}`));
@@ -142,20 +144,20 @@ const triviaGame = {
 /*-------------------------------------------------------------------------
 / CONSTRUCTORS & FUNCTIONS
 /-------------------------------------------------------------------------*/
-function TriviaQuestion(question, a1, a2, a3, a4, response, img, correctAnswer = a1) {
+function TriviaQuestion(question, a1, a2, a3, a4, response, date, correctAnswer = a1) {
     this.question = question;
     this.answers = [a1, a2, a3, a4];
     this.response = response;
     this.correctAnswer = correctAnswer;
-    this.image = img;
+    this.date = parseInt(date, 10);
 }
 
 
 /*-------------------------------------------------------------------------
 / MAIN PROCESS
 /-------------------------------------------------------------------------*/
-questionList.push(new TriviaQuestion("Who is considered to be the first computer programmer?", "Ada Lovelace", "Annabella Byron", "Betty Alexandra Toole", "Charles Babbage", "Lovelace wrote an algorithm for the Analytical Engine, a mechanical computer proposed by her friend and colleague Charles Babbage, to compute Bernoulli numbers. This algorithm is considered to be the first specifically tailored for implementation on a computer.", "https://placeimg.com/640/480/people"));
-questionList.push(new TriviaQuestion('The "Harvard Computers" were a group of women hired by the director of the Harvard Observatory to process astronomical data. By what other name were they known?', "Pickering's Harem", "Harvard Classification System", "Cepheid Variables", "The Harem Effect", "The Harvard Computers were better known at the time as Pickering's Harem since they were hired by Edward Charles Pickering, then director of the Harvard Observatory. This is a prime example of the so-called Harem effect where male scientists in power hire predominately female subordinates."));
+questionList.push(new TriviaQuestion("Who is considered to be the first computer programmer?", "Ada Lovelace", "Annabella Byron", "Betty Alexandra Toole", "Charles Babbage", "Lovelace wrote an algorithm for the Analytical Engine, a mechanical computer proposed by her friend and colleague Charles Babbage, to compute Bernoulli numbers. This algorithm is considered to be the first specifically tailored for implementation on a computer.", "1842"));
+questionList.push(new TriviaQuestion('The "Harvard Computers" were a group of women hired by the director of the Harvard Observatory to process astronomical data. By what other name were they known?', "Pickering's Harem", "Harvard Classification System", "Cepheid Variables", "The Harem Effect", "The Harvard Computers were better known at the time as Pickering's Harem since they were hired by Edward Charles Pickering, then director of the Harvard Observatory. This is a prime example of the so-called Harem effect where male scientists in power hire predominately female subordinates.", "1893"));
 
 $("#answers").on("click", "button", function () {
     clearInterval(questionTimer);
