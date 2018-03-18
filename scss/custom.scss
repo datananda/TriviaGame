@@ -44,7 +44,7 @@ body {
 }
 
 .w-100.p-3 {
-    background-color: rgba(167, 160, 150, 0.2);
+    background-color: rgba(theme-color("light"), 0.2);
     border: ($btn-border-width * 2) solid theme-color("light");
 }
 
