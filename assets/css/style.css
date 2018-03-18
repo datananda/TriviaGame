@@ -59,7 +59,7 @@ h2 {
 
 #countdown {
     top: 0.25rem;
-    background-color: none;
+    background-color: transparent;
     border: none;
 }
 

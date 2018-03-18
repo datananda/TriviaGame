@@ -48,7 +48,7 @@ const triviaGame = {
     numCorrect: 0,
     numIncorrect: 0,
     numUnanswered: 0,
-    secondsToAnswer: 10000,
+    secondsToAnswer: 30,
     startGame() {
         this.questions = questionList.concat();
         this.numCorrect = 0;
@@ -111,7 +111,7 @@ const triviaGame = {
                 triviaGame.selectQuestion();
                 triviaGame.startQuestionTimer();
             }
-        }, 30000);
+        }, 10000);
     },
     checkGuess(guess) {
         if (this.currentQuestion.correctAnswer === guess) {
