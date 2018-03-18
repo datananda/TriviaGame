@@ -43,18 +43,19 @@ let questionTimer;
 const questionList = [];
 
 const triviaGame = {
-    questions: questionList,
+    questions: questionList.concat(),
     currentQuestion: {},
     numCorrect: 0,
     numIncorrect: 0,
     numUnanswered: 0,
-    secondsToAnswer: 10,
+    secondsToAnswer: 10000,
     startGame() {
-        this.questions = questionList;
+        this.questions = questionList.concat();
         this.numCorrect = 0;
         this.numIncorrect = 0;
         this.numUnanswered = 0;
         $("#start-button").hide();
+        $("#game-result-container").hide();
         this.selectQuestion();
         this.startQuestionTimer();
     },
@@ -65,11 +66,11 @@ const triviaGame = {
     },
     startQuestionTimer() {
         let secondsLeft = this.secondsToAnswer;
-        let percentRemaining = 100 * (secondsLeft / this.secondsToAnswer);
-        console.log(percentRemaining);
+        let percentRemaining = 100;
         this.displayQuestion();
         $("#countdown").text(`Time Remaining: ${secondsLeft} seconds`);
         $(".progress-bar").css("width", `${percentRemaining}%`);
+        $("#countdown-container").show();
         questionTimer = setInterval(() => {
             secondsLeft--;
             percentRemaining = 100 * (secondsLeft / this.secondsToAnswer);
@@ -85,11 +86,13 @@ const triviaGame = {
     displayQuestion() {
         $("#question").text(this.currentQuestion.question);
         $("#answers").empty();
-        // TODO: SHUFFLE ANSWERS look into .map
-        this.currentQuestion.answers.forEach((elem, i) => {
-            $("#answers").append($("<button>", { type: "button", class: "list-group-item list-group-item-action" }).text(elem));
-        });
-        $("#question-container").show()
+        const currentAnswers = this.currentQuestion.answers.concat();
+        for (let i = 0; i < this.currentQuestion.answers.length; i++) {
+            const randIndex = Math.floor(Math.random() * currentAnswers.length);
+            $("#answers").append($("<button>", { type: "button", class: "btn btn-outline-secondary btn-lg btn-block" }).text(currentAnswers[randIndex]));
+            currentAnswers.splice(randIndex, 1);
+        }
+        $("#question-container").show();
     },
     displayResult(result) {
         $("#question-container").hide();
@@ -122,10 +125,13 @@ const triviaGame = {
         return false;
     },
     displayGameResult() {
-        $("#num-correct").text(`Correct Answers: ${this.numCorrect}`);
-        $("#num-incorrect").text(`Incorrect Answers: ${this.numIncorrect}`);
-        $("#num-unanswered").text(`Unanswered Questions: ${this.numUnanswered}`);
-    }
+        $("#countdown-container").hide();
+        $("#game-stats").empty();
+        $("#game-stats").append($("<p>").text(`Correct Answers: ${this.numCorrect}`));
+        $("#game-stats").append($("<p>").text(`Incorrect Answers: ${this.numIncorrect}`));
+        $("#game-stats").append($("<p>").text(`Unanswered Questions: ${this.numUnanswered}`));
+        $("#game-result-container").show();
+    },
 };
 
 
@@ -138,17 +144,6 @@ function TriviaQuestion(question, answer1, answer2, answer3, answer4, correctAns
     this.correctAnswer = correctAnswer;
 }
 
-TriviaQuestion.prototype.shuffleAnswers = function shuffle() {
-    // shuffle array
-};
-
-// TriviaQuestion.prototype.isCorrectAnswer = function check(guess) {
-//     if (guess === this.correctAnswer) {
-//         return true;
-//     }
-//     return false;
-// };
-
 
 /*-------------------------------------------------------------------------
 / MAIN PROCESS
@@ -156,11 +151,11 @@ TriviaQuestion.prototype.shuffleAnswers = function shuffle() {
 questionList.push(new TriviaQuestion("Who is considered to be the first computer programmer?", "Ada Lovelace", "Annabella Byron", "Betty Alexandra Toole", "Charles Babbage"));
 questionList.push(new TriviaQuestion('The “Harvard Computers” were a group of women hired by the director of the Harvard Observatory to process astronomical data. By what other name were they known?', "Pickering's Harem", "Harvard Classification System", "Cepheid Variables", "The Harem Effect"));
 
-$("#answers").on("click", "li", function () {
+$("#answers").on("click", "button", function () {
     clearInterval(questionTimer);
     triviaGame.checkGuess($(this).html());
 });
 
-$("#start-button").click(() => {
+$("#start-button, #reset-button").click(() => {
     triviaGame.startGame();
 });
