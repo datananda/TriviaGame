@@ -19,7 +19,7 @@ $font-size-lg: ($font-size-base * 2);
 // HEADERS
 $h1-font-size: $font-size-base * 2.25;
 $h2-font-size: $font-size-base * 1.25;
-$headings-line-height: 1;
+// $headings-line-height: 1;
 
 // BORDERS
 $border-radius: 0;
@@ -50,6 +50,26 @@ body {
 
 .btn {
     background-color: $white;
+}
+
+//--------------------------------------------------
+// TIMELINE STYLING
+//--------------------------------------------------
+.dot {
+    fill: theme-color("primary");
+}
+
+path {
+    stroke-width: 2px;
+    stroke: theme-color("light");
+}
+
+.tick line {
+    stroke: theme-color("light");
+}
+
+.tick text {
+    fill: theme-color("secondary");
 }
 
 

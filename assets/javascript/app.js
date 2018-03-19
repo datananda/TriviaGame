@@ -60,9 +60,9 @@ const triviaGame = {
         this.startQuestionTimer();
     },
     selectQuestion() {
-        const randIndex = Math.floor(Math.random() * this.questions.length);
-        this.currentQuestion = this.questions[randIndex];
-        this.questions.splice(randIndex, 1);
+        // const randIndex = Math.floor(Math.random() * this.questions.length);
+        this.currentQuestion = this.questions[0];
+        this.questions.splice(0, 1);
         updateTimeline([{ key: "date1", startDate: this.currentQuestion.date }]);
     },
     startQuestionTimer() {
@@ -158,6 +158,12 @@ function TriviaQuestion(question, a1, a2, a3, a4, response, date, correctAnswer 
 /-------------------------------------------------------------------------*/
 questionList.push(new TriviaQuestion("Who is considered to be the first computer programmer?", "Ada Lovelace", "Annabella Byron", "Betty Alexandra Toole", "Charles Babbage", "Lovelace wrote an algorithm for the Analytical Engine, a mechanical computer proposed by her friend and colleague Charles Babbage, to compute Bernoulli numbers. This algorithm is considered to be the first specifically tailored for implementation on a computer.", "1842"));
 questionList.push(new TriviaQuestion('The "Harvard Computers" were a group of women hired by the director of the Harvard Observatory to process astronomical data. By what other name were they known?', "Pickering's Harem", "Harvard Classification System", "Cepheid Variables", "The Harem Effect", "The Harvard Computers were better known at the time as Pickering's Harem since they were hired by Edward Charles Pickering, then director of the Harvard Observatory. This is a prime example of the so-called Harem effect where male scientists in power hire predominately female subordinates.", "1893"));
+questionList.push(new TriviaQuestion("What was the name of the set of computers developed by British codebreakers for cryptanalysis during WWII and operated by the Women's Royal Naval Service?", "Colossus", "Bombe", "Enigma", "Bletchley", "The women who operated the Colossus machines were called Wrens after the phonetic pronunciation of the acronym WRNS (Women's Royal Naval Service). The Colussus itself was the first of the electronic digital machines with programmability and was used to decipher intercepted encyrpted messages.", "1943"));
+questionList.push(new TriviaQuestion("Grace Hopper is called the mother of which programming language?", "COBOL", "FLOW-MATIC", "FORTRAN", "UNIVAC", "American computer scientist and United States Navy admiral Grace Hopper popularized the idea of machine-independent programming languages as well as English word-based languages. Based on Hopper's work, the CODASYL consortium designed the language COBOL (common business-oriented language).", "1959"));
+questionList.push(new TriviaQuestion("What activity is Mary Allen Wilkes known for being the first to do?", "Using a personal computer in the home", "Programming an IBM computer", "Developing an interactive operating system", "Authoring a programming manual", "Wilkes is recognized as the world's first personal computer because she worked on the LINC computer from her parents' home in Baltimore.", "1965"));
+questionList.push(new TriviaQuestion("At its peak, what was the percentage of computer science majors that were women?", "37%", "82%", "14%", "59%", "The precipitous drop-off in female computer science majors starting in 1984 is believed to be caused by the rise in personal computers, which were largely marketed to men and boys.", "1984"));
+questionList.push(new TriviaQuestion("What was the name of the email network for women in technology that Anita Borg founded?", "Systers", "The Institute for Women and Technology", "The Association for Women in Computing", "MECCA", "The idea for Systers came to Borg when she was struck by how few females were in attendance at the Symposium on Operating Systems Principles (SOSP) conference and discussed the issue with several other women in the ladies' room and over lunch.", "1987"));
+questionList.push(new TriviaQuestion("In 2016, how much less did the average female programmer make than her male counterpart?", "28.3%", "19.5%", "36.2%", "41.7%", "In a study conducted by Glassdoor on over 505,000 salaries, computer programmers were found to have the largest gender pay gap of all the tech jobs.", "2016"));
 
 $("#answers").on("click", "button", function () {
     clearInterval(questionTimer);

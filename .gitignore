@@ -43,4 +43,4 @@ node_modules/
 # SASS Stuff #
 ##############
 .sass-cache*
-.css.map
+*.css.map
