@@ -1,41 +1,3 @@
-/* --------------------------------------------
-PseudoCode
------------------------------------------------
-
-#################
-# GAME LOGIC
-#################
-start game
-show new question
-starts timer for 30 seconds
-if user clicks correct question, end timer, show message
-if user clicks incorrect question, end timer, show message
-if time runs out, show message
-wait 5 seconds and start a new question
-repeat until all the questions are used up
-show results & option to start over
-
-#####################
-# QUESTION OBJECT
-#####################
-question
-4 answers
-correct answer
-
-#################
-# GAME OBJECT
-#################
-questions
-current question (?)
-number correctly answered
-number incorrectly answered
-number unanswered
-seconds given for answering a question
-seconds given for viewing the answer
-
-*/
-
-
 /*-------------------------------------------------------------------------
 / GLOBAL VARIABLES
 /-------------------------------------------------------------------------*/
@@ -60,7 +22,6 @@ const triviaGame = {
         this.startQuestionTimer();
     },
     selectQuestion() {
-        // const randIndex = Math.floor(Math.random() * this.questions.length);
         this.currentQuestion = this.questions[0];
         this.questions.splice(0, 1);
         updateTimeline([{ key: "date1", startDate: this.currentQuestion.date }]);

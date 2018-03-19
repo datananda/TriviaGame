@@ -1,5 +1,5 @@
 /* svg size */
-const width = $(window).width();
+const width = $(window).width(); // TODO: UPDATE WIDTH ON WINDOW RESIZE AND REDISPLAY TIMELINE
 const height = 50;
 
 /* create timeline scale */
