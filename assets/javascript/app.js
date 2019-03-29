@@ -31,7 +31,7 @@ const triviaGame = {
         let percentRemaining = 100;
         this.displayQuestion();
         $("#countdown").text(`Time Remaining: ${secondsLeft} seconds`);
-        $(".progress-bar").css("width", `${percentRemaining}%`); //TODO: UPDATE ARIA VALUE ALSO
+        $(".progress-bar").css("width", `${percentRemaining}%`); // TODO: UPDATE ARIA VALUE ALSO
         $("#countdown-container").show();
         questionTimer = setInterval(() => {
             secondsLeft--;
